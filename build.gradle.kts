@@ -1,16 +1,20 @@
 plugins {
 	kotlin("jvm") version "1.5.31"
+	`maven-publish`
 }
 
 allprojects {
-	apply(plugin = "org.jetbrains.kotlin.jvm")
-	
 	group = "com.csgopoison.plugins.official"
 	
 	repositories {
 		mavenLocal()
 		mavenCentral()
 	}
+}
+
+subprojects {
+	apply(plugin = "org.jetbrains.kotlin.jvm")
+	apply(plugin = "org.gradle.maven-publish")
 	
 	dependencies {
 		implementation(kotlin("stdlib"))
@@ -33,6 +37,15 @@ allprojects {
 		}
 		compileTestKotlin {
 			kotlinOptions.jvmTarget = "11"
+		}
+	}
+	
+	publishing {
+		publications {
+			create<MavenPublication>("maven") {
+				artifactId = project.path.substring(1).replace(':', '-')
+				from(components["java"])
+			}
 		}
 	}
 }
