@@ -1,3 +1,4 @@
 rootProject.name = "csgopoison-official-plugins"
 
-include("glow-esp")
+//simp
+include("all-plugins")
